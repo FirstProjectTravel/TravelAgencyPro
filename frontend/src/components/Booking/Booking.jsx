@@ -5,7 +5,7 @@ import{Form,FormGroup,ListGroup,ListGroupItem,Button} from 'reactstrap'
 import { useNavigate } from 'react-router-dom'
 
 
-function Booking({loggedUser,tour,avgRating}) {
+function Booking({loggedUser,tour,avgRating ,renderReview,book,setToursByUser,tours,showThankYouTag}) {
     const {price,reviews,_id}=tour[0]
     const navigate=useNavigate()
  const [credent,setCredent]=useState({
@@ -34,10 +34,33 @@ function Booking({loggedUser,tour,avgRating}) {
         }
         else {
           axios.post("http://localhost:4000/Book/add",credent).then((res)=>{navigate("/thank-you")}).catch((err)=>{console.log(err)})
+          renderReview()
+          getToursByUser()
+          showThankYouTag()
         }
     }
+      
+//=========================================== getting the booked tours =======================================
+const userBooks = book.filter((e) => e.username === loggedUser)
+let ToursByUser =[]
 
-        
+const getToursByUser = ()=>{
+  if(userBooks.length){
+  for(var i=0;i<userBooks.length;i++){
+    for(var j=0;j<tours.length;j++){
+      if(tours[j].id === userBooks[i].tourId){
+        ToursByUser.push({
+          city:tours[j].city,
+          title:tours[j].title,
+          price:tours[j].price,
+          fullName:userBooks[i].fullName,
+          bookAt:userBooks[i].bookAt,
+          guestSize:userBooks[i].guestSize
+        })}}}}
+        setToursByUser(ToursByUser)
+}
+
+
 //============================================================================================================
 
   return (

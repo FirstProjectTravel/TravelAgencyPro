@@ -13,7 +13,7 @@ import { getOkLogIn, setOkLogIn } from '../../context/AuthContext'
 function Header({setLoggedUser,loggedUser}) {
     
 
-    const nav_links = [
+    let nav_links = [
         {
             path: '/home',
             display: 'Home'
@@ -26,7 +26,49 @@ function Header({setLoggedUser,loggedUser}) {
             path: '/tours',
             display: 'Tours'
         },
+
     ]
+    if(loggedUser === "admin" && getOkLogIn()){
+        nav_links = [
+            {
+                path: '/home',
+                display: 'Home'
+            },
+            {
+                path: '/about',
+                display: 'Contact'
+            },
+            {
+                path: '/tours',
+                display: 'Tours'
+            },
+            {
+                path: '/post',
+                display: 'Create'
+            }
+        ]
+    }
+        if(loggedUser !== "admin" && getOkLogIn()){
+            nav_links = [
+                {
+                    path: '/home',
+                    display: 'Home'
+                },
+                {
+                    path: '/about',
+                    display: 'Contact'
+                },
+                {
+                    path: '/tours',
+                    display: 'Tours'
+                },
+                {
+                    path: '/thank-you',
+                    display: 'Book'
+                }
+        
+            ]
+    }
 
 
     const headerRef = useRef(null)

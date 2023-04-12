@@ -7,8 +7,10 @@ import calculateAvgRating from './../Utils/avgRating'
 import avatar from './../assets/images/avatar.jpg'
 import Booking from '../components/Booking/Booking'
 import Update from './Update'
+import { getOkLogIn} from '../context/AuthContext'
 
-function TourDetails({loggedUser,tours,renderReview}) {
+
+function TourDetails({book,loggedUser,tours,renderReview,setToursByUser,showThankYouTag}) {
   const {id}=useParams()
   const reviewMsgRef=useRef('')
   const [tourRating,setTourRating]=useState(null)
@@ -28,7 +30,6 @@ const reviewDetails={
   rating: tourRating,
   username:loggedUser
 }
-  console.log(reviewDetails);
  const options ={day:'numeric',month:'long',year:'numeric'}
  const handle=e=>{
   if(!reviewDetails.username) alert("You need to LogIn to post a review")
@@ -101,7 +102,7 @@ const showUpdate = ()=>{
 
 
 
-            { loggedUser === "admin" && <div className='card_bottom d-flex align-items-center justify-content-between mt-3'>
+            { loggedUser === "admin"&& getOkLogIn() && <div className='card_bottom d-flex align-items-center justify-content-between mt-3'>
             <button className="btn booking_btn" onClick={()=>{
                             axios.delete(`http://localhost:4000/Tour/${id}`).then((res)=>{
                             renderReview();navigate("/")}).catch((err)=>{console.log(err)})
@@ -112,9 +113,7 @@ const showUpdate = ()=>{
                 {!toggle &&<Link >Update </Link>}
                 {toggle && <Link > Cancel Update </Link>}
             </button>
-            <button className="btn booking_btn">
-                <Link to={"/post"}>Post</Link>
-            </button>
+            
             </div>}
 
 
@@ -170,7 +169,7 @@ const showUpdate = ()=>{
           </div>
         </Col>
         <Col lg='4'>
-        <Booking tour={tour} avgRating={avgRating} loggedUser={loggedUser}/>
+        <Booking tours={tours} tour={tour} avgRating={avgRating} loggedUser={loggedUser} renderReview={renderReview} book={book} setToursByUser={setToursByUser} showThankYouTag={showThankYouTag}/>
         </Col>
       </Row>
     </Container>

@@ -10,7 +10,6 @@ import customizationImg from '../assets/images/customization.png';
 
 function ServiceList({weather,tours}) {
     var reviews=0, bestTour=""
-    console.log(tours)
     if(tours.length){
         
         for(var i=0;i<tours.length;i++){

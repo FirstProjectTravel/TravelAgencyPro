@@ -41,6 +41,7 @@ const AuthReducer=(state,action)=>{
                     error: action.payload   
                 };
         case "RECISTER_SUCCESS" :
+            okLogIn = true
                     return{
                         user: null ,
                         loading:false,

@@ -23,6 +23,10 @@ function Home({tours,serchedTours, setSerchedTours,weather}) {
 
   return (
     <>
+    <div className="chat-icon">
+    <i class="ri-chat-3-line"></i>
+    </div>
+
     <section>
       <Container>
         <Row>
@@ -43,7 +47,7 @@ function Home({tours,serchedTours, setSerchedTours,weather}) {
           </Col>
           <Col lg='2'>
             <div className='hero-img-box mt-4'>
-              <video src={heroVideo} alt='' controls />
+              <video src={heroVideo} alt='' controls autoPlay loop volume={0.1} />
             </div>
           </Col>
           <Col lg='2'>

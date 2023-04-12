@@ -1,7 +1,8 @@
 import React,{useState} from 'react'
 import{Form,FormGroup,Button} from 'reactstrap'
 import axios from 'axios'
-import '../styles/post.css'
+// import '../styles/post.css'
+import '../components/Booking/booking.css'
 import {useNavigate} from 'react-router-dom'
 function Post({renderReview}) {
 const[title,setTitle]=useState("")
@@ -22,9 +23,9 @@ const posted=()=>{
 }
 
   return (
-    <div>Post
+    <div className="booking-form"> <h5 style={{textAlign:"center"}}>Add A New Tour</h5>
 
-<Form className='post'>
+<Form className='booking-info-form'>
         <FormGroup>
         <input type='text' placeholder='title'  onChange={(e)=>{setTitle(e.target.value)}}  />
         </FormGroup>
@@ -49,7 +50,9 @@ const posted=()=>{
         <input type='number' placeholder='maxGroupSize'   onChange={(e)=>{setMax(e.target.value)}}/>
         </FormGroup>
     </Form>
-    <Button className='btn primary__btn w-100 mt-4' onClick={()=>{posted()}} >Post Now</Button>
+    <div style={{textAlign: 'center'}}>
+    <Button className='btn primary__btn  mt-4' style={{ width: '200px' }} onClick={()=>{posted()}} >Post Now</Button>
+    </div>
     </div>
   )
 }

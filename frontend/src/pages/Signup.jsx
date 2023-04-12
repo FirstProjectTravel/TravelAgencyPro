@@ -69,7 +69,7 @@ import registerImg from '../assets/images/register.png'
 import userIcon from '../assets/images/user.png'
 import { AuthContext } from './../context/AuthContext'
  
-function Signup() {
+function Signup({loggedUser,setLoggedUser}) {
   const [credent,setCredent]=useState({
     username: undefined,
     email:undefined,
@@ -80,6 +80,8 @@ const {dispatch}=useContext(AuthContext)
 
   const handleChange=e=>{
     setCredent(prev=>({...prev,[e.target.id]:e.target.value}))
+    setLoggedUser(credent.username)
+    console.log(loggedUser)
 }
 
 const handle = async e=>{
@@ -95,7 +97,7 @@ const handle = async e=>{
     const result= await res.json()
     if(!res.ok) alert(result.message)
     dispatch({type:"RECISTER_SUCCESS"})
-    navigate('/login')
+    navigate('/home')
 }
  catch(err){
    alert(err.message)

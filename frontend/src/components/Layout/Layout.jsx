@@ -42,7 +42,7 @@ function Layout() {
   return (
     <>
       <Header loggedUser={loggedUser} setLoggedUser={setLoggedUser} />
-      <Routers emailToGetUn={emailToGetUn} setEmailToGetUn={setEmailToGetUn}  loggedUser={loggedUser}/>
+      <Routers emailToGetUn={emailToGetUn} setEmailToGetUn={setEmailToGetUn}  loggedUser={loggedUser} setLoggedUser={setLoggedUser}/>
       <Footer />
     </>
   )

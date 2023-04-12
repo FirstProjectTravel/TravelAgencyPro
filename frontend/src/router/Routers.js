@@ -13,11 +13,13 @@ import Update from '../pages/Update'
 import Post from '../pages/Post'
 import About from '../pages/About'
 
-function Routers({loggedUser,emailToGetUn, setEmailToGetUn}) {
+function Routers({loggedUser,setLoggedUser,emailToGetUn, setEmailToGetUn}) {
 
 
   const [tours,setTours] = useState([])
   const [serchedTours, setSerchedTours]= useState([])
+  const [toursByUser,setToursByUser]= useState([])
+
   const [reRender,setReRender]=useState(false)
   const renderReview=()=>{
     setReRender(!reRender)
@@ -26,8 +28,16 @@ function Routers({loggedUser,emailToGetUn, setEmailToGetUn}) {
   useEffect(()=>{
     axios.get("http://localhost:4000/Tour").then(({data})=>{setTours(data);setSerchedTours(data)}).catch((err)=>{console.log(err)})},[reRender])
     
+//============================ gettin the Book data ===================================================================
+const [book,setBook] = useState([])
+const [newBook,setNewBook] = useState(false)
+useEffect(()=>{
+  axios.get("http://localhost:4000/Book").then(({data})=>{setBook(data);}).catch((err)=>{console.log(err)})},[reRender])
+  
+const showThankYouTag=()=>{setNewBook(true);setTimeout(()=>{setNewBook(false)},4000)}
 
 //==================================== weather =====================================
+
 const [weather,setWeather] = useState([])
 const apiUrl = 'https://api.openweathermap.org/data/2.5/weather';
 const apiKey = '4e9ad85dd70229b0cc0effc529a02c67';
@@ -43,10 +53,13 @@ useEffect(()=>{axios.get(apiUrlWithParams).then(({data}) => setWeather(data)).ca
     <Route path='/' element={<Navigate to='/home'/>} tours={tours}/>
     <Route path='/home' element={<Home tours={tours} serchedTours={serchedTours} setSerchedTours={setSerchedTours} weather={weather}/>}/>
     <Route path='/tours' element={<Tours tours={tours} serchedTours={serchedTours} setSerchedTours={setSerchedTours}/>}/>
-    <Route path='/tours/:id' element={<TourDetails tours={tours} loggedUser={loggedUser} renderReview={renderReview} />}/>
+
+
+      
+    <Route path='/tours/:id' element={<TourDetails tours={tours} book={book} loggedUser={loggedUser} renderReview={renderReview} setToursByUser={setToursByUser} showThankYouTag={showThankYouTag}/>}/>
     <Route path='/login' element={<Login emailToGetUn={emailToGetUn}  setEmailToGetUn={setEmailToGetUn}/>}/>
-    <Route path='/singup' element={<Signup/>}/>
-    <Route path='/thank-you' element={<ThankYou/>}/>
+    <Route path='/singup' element={<Signup loggedUser={loggedUser} setLoggedUser={setLoggedUser}/>}/>
+    <Route path='/thank-you' element={<ThankYou toursByUser={toursByUser} newBook={newBook}/>}/>
     <Route path='/tours/search' element={<Search tours={tours}/>}/>
     <Route path='/thank-youNl' element={<ThankYouNewsLetter/>}/>
     <Route path='/update' element={<Update/>}/>
